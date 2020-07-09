@@ -10,3 +10,31 @@ Compose a site using the [Laravel](https://laravel.com/) or Vue framework that a
 * Display a detail page with at least 3 points of data to display
 * Include unit tests
 * Deploy it on the cloud - be prepared to describe your process on deployment
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
