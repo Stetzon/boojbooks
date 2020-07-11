@@ -1,6 +1,11 @@
 @import 'variables.scss';
 @import 'bulma/bulma.scss';
 
-body {
-  background-color: #f0f3f5;
+html {
+  background-color: $bg-color;
+  font-family: 'Barlow', sans-serif;
+}
+
+h1.title {
+  color: $title-color;
 }

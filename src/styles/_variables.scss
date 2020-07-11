@@ -1,0 +1,5 @@
+$b-primary: #009999;
+$bg-color: lighten($b-primary, 68%);
+$title-color: darken($b-primary, 15%);
+$link-color-active: darken($b-primary, 10%);
+$link-color: $b-primary;
