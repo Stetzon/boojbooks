@@ -3,9 +3,10 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './styles/styles.scss';
-import { Tooltip } from 'buefy';
+import { Tooltip, Loading } from 'buefy';
 
 Vue.use(Tooltip);
+Vue.use(Loading);
 
 Vue.config.productionTip = false;
 

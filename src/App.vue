@@ -8,6 +8,14 @@
   </div>
 </template>
 
+<script>
+export default {
+  mounted() {
+    this.$store.dispatch('fetchBooks');
+  }
+};
+</script>
+
 <style lang="scss">
 #app {
   -webkit-font-smoothing: antialiased;

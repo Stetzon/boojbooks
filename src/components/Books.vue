@@ -13,18 +13,15 @@
 
 <script>
 import Book from './Book';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Books',
   components: {
     Book
   },
-  props: {
-    books: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
-  }
+  computed: mapState({
+    books: state => state.books
+  })
 };
 </script>
