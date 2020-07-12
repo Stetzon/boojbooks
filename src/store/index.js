@@ -34,16 +34,32 @@ export default new Vuex.Store({
       state.sort.rank = !state.sort.rank;
       state.sort.rankLw = null;
       state.sort.wol = null;
+
+      state.books.sort((a, b) => {
+        return state.sort.rank ? a.rank - b.rank : b.rank - a.rank;
+      });
     },
     SORT_RANK_LW(state) {
       state.sort.rank = null;
       state.sort.rankLw = !state.sort.rankLw;
       state.sort.wol = null;
+
+      state.books.sort((a, b) => {
+        return state.sort.rankLw
+          ? a.rank_last_week - b.rank_last_week
+          : b.rank_last_week - a.rank_last_week;
+      });
     },
     SORT_WOL(state) {
       state.sort.rank = null;
       state.sort.rankLw = null;
       state.sort.wol = !state.sort.wol;
+
+      state.books.sort((a, b) => {
+        return state.sort.wol
+          ? a.weeks_on_list - b.weeks_on_list
+          : b.weeks_on_list - a.weeks_on_list;
+      });
     }
   },
   actions: {
