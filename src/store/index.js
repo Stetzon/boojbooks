@@ -8,7 +8,12 @@ export default new Vuex.Store({
   state: {
     loading: false,
     books: [],
-    error: false
+    error: false,
+    sort: {
+      rank: true,
+      rankLw: null,
+      wol: null
+    }
   },
   mutations: {
     FETCHING(state) {
@@ -24,6 +29,21 @@ export default new Vuex.Store({
       state.loading = false;
       state.error = true;
       state.books = [];
+    },
+    SORT_RANK(state) {
+      state.sort.rank = !state.sort.rank;
+      state.sort.rankLw = null;
+      state.sort.wol = null;
+    },
+    SORT_RANK_LW(state) {
+      state.sort.rank = null;
+      state.sort.rankLw = !state.sort.rankLw;
+      state.sort.wol = null;
+    },
+    SORT_WOL(state) {
+      state.sort.rank = null;
+      state.sort.rankLw = null;
+      state.sort.wol = !state.sort.wol;
     }
   },
   actions: {
@@ -35,6 +55,15 @@ export default new Vuex.Store({
       } catch (error) {
         commit('ERROR', error.response.data);
       }
+    },
+    sortRank({ commit }) {
+      commit('SORT_RANK');
+    },
+    sortRankLw({ commit }) {
+      commit('SORT_RANK_LW');
+    },
+    sortByWol({ commit }) {
+      commit('SORT_WOL');
     }
   }
 });

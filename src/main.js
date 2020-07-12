@@ -3,10 +3,15 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './styles/styles.scss';
-import { Tooltip, Loading } from 'buefy';
+import { Tooltip, Loading, Button, ConfigProgrammatic } from 'buefy';
 
+ConfigProgrammatic.setOptions({
+  defaultIconPack: 'fas'
+});
 Vue.use(Tooltip);
 Vue.use(Loading);
+Vue.use(Button);
+Vue.use(ConfigProgrammatic);
 
 Vue.config.productionTip = false;
 
