@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './styles/styles.scss';
-import { Tooltip, Loading, Button, ConfigProgrammatic } from 'buefy';
+import { Tooltip, Loading, Button, Input, Field, ConfigProgrammatic } from 'buefy';
 
 ConfigProgrammatic.setOptions({
   defaultIconPack: 'fas'
@@ -11,6 +11,8 @@ ConfigProgrammatic.setOptions({
 Vue.use(Tooltip);
 Vue.use(Loading);
 Vue.use(Button);
+Vue.use(Input);
+Vue.use(Field);
 Vue.use(ConfigProgrammatic);
 
 Vue.config.productionTip = false;

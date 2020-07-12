@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     loading: false,
     books: [],
+    ogBooks: [],
     error: false,
     sort: {
       rank: true,
@@ -19,16 +20,19 @@ export default new Vuex.Store({
     FETCHING(state) {
       state.loading = true;
       state.error = false;
+      state.ogBooks = [];
       state.books = [];
     },
     FETCHED(state, books) {
       state.loading = false;
       state.books = books;
+      state.ogBooks = books;
     },
     ERROR(state) {
       state.loading = false;
       state.error = true;
       state.books = [];
+      state.ogBooks = [];
     },
     SORT_RANK(state) {
       state.sort.rank = !state.sort.rank;
@@ -38,6 +42,7 @@ export default new Vuex.Store({
       state.books.sort((a, b) => {
         return state.sort.rank ? a.rank - b.rank : b.rank - a.rank;
       });
+      state.ogBooks = [...this.state.books];
     },
     SORT_RANK_LW(state) {
       state.sort.rank = null;
@@ -49,6 +54,7 @@ export default new Vuex.Store({
           ? a.rank_last_week - b.rank_last_week
           : b.rank_last_week - a.rank_last_week;
       });
+      state.ogBooks = [...this.state.books];
     },
     SORT_WOL(state) {
       state.sort.rank = null;
@@ -59,6 +65,12 @@ export default new Vuex.Store({
         return state.sort.wol
           ? a.weeks_on_list - b.weeks_on_list
           : b.weeks_on_list - a.weeks_on_list;
+      });
+      state.ogBooks = [...this.state.books];
+    },
+    SEARCH(state, keywords) {
+      this.state.books = state.ogBooks.filter(book => {
+        return book.title.includes(keywords.toUpperCase());
       });
     }
   },
@@ -80,6 +92,9 @@ export default new Vuex.Store({
     },
     sortByWol({ commit }) {
       commit('SORT_WOL');
+    },
+    search({ commit }, keywords) {
+      commit('SEARCH', keywords);
     }
   }
 });

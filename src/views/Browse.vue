@@ -12,11 +12,17 @@
     <section class="books">
       <div class="columns is-marginless">
         <div class="column is-8-mobile is-3-tablet is-offset-2-mobile is-offset-1-tablet">
-          <div class="field">
-            <p class="control">
-              <input class="input" type="text" placeholder="Search list" />
-            </p>
-          </div>
+          <b-field>
+            <b-input
+              placeholder="Search list"
+              v-model="search"
+              type="text"
+              icon-right="times"
+              :icon-right-clickable="search.length > 0"
+              @icon-right-click="search = ''"
+            >
+            </b-input>
+          </b-field>
         </div>
         <div class="column is-7">
           <div class="level is-mobile">
@@ -55,7 +61,8 @@ export default {
   components: { Books },
   data() {
     return {
-      books: []
+      books: [],
+      search: ''
     };
   },
   async mounted() {
@@ -82,6 +89,11 @@ export default {
     },
     sortByWol() {
       this.$store.dispatch('sortByWol', !this.sortByWol);
+    },
+  },
+  watch: {
+    search(val) {
+      this.$store.dispatch('search', val);
     }
   }
 };
