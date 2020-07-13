@@ -76,9 +76,14 @@ export default new Vuex.Store({
     },
     ADD_TO_READING_LIST(state, book) {
       Vue.set(state.readingList, book.primary_isbn10, book);
+      localStorage.setItem('readingList', JSON.stringify(state.readingList));
     },
     REMOVE_FROM_READING_LIST(state, book) {
       Vue.delete(state.readingList, book.primary_isbn10);
+      localStorage.setItem('readingList', JSON.stringify(state.readingList));
+    },
+    SET_READING_LIST(state, list) {
+      state.readingList = list;
     }
   },
   actions: {
@@ -90,6 +95,11 @@ export default new Vuex.Store({
       } catch (error) {
         commit('ERROR', error.response.data);
       }
+    },
+    fetchReadingList({ commit }) {
+      let list = localStorage.getItem('readingList');
+      list = list ? JSON.parse(list) : {};
+      commit('SET_READING_LIST', list);
     },
     sortRank({ commit }) {
       commit('SORT_RANK');

@@ -11,6 +11,7 @@
 <script>
 export default {
   mounted() {
+    this.$store.dispatch('fetchReadingList');
     this.$store.dispatch('fetchBooks');
   }
 };
