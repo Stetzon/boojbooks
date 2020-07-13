@@ -18,24 +18,6 @@
           </p>
         </div>
         <nav class="level is-mobile">
-          <div v-show="!detailPage" class="level-item has-text-centered">
-            <div>
-              <p class="heading">This Week</p>
-              <p class="title is-5">{{ details.rank }}</p>
-            </div>
-          </div>
-          <div v-show="!detailPage" class="level-item has-text-centered">
-            <div>
-              <p class="heading">Last Week</p>
-              <p class="title is-5">{{ details.rank_last_week }}</p>
-            </div>
-          </div>
-          <div v-show="!detailPage" class="level-item has-text-centered">
-            <div>
-              <p class="heading">Weeks on List</p>
-              <p class="title is-5">{{ details.weeks_on_list }}</p>
-            </div>
-          </div>
           <div v-show="detailPage" class="level-item has-text-centered">
             <div>
               <p class="heading">Buy now</p>
@@ -44,6 +26,49 @@
                   ><i class="fab fa-amazon"></i
                 ></a>
               </p>
+            </div>
+          </div>
+          <div v-show="showRankings" class="level-item has-text-centered">
+            <div>
+              <p class="heading">This Week</p>
+              <p class="title is-5">{{ details.rank }}</p>
+            </div>
+          </div>
+          <div v-show="showRankings" class="level-item has-text-centered">
+            <div>
+              <p class="heading">Last Week</p>
+              <p class="title is-5">{{ details.rank_last_week }}</p>
+            </div>
+          </div>
+          <div v-show="showRankings" class="level-item has-text-centered">
+            <div>
+              <p class="heading">Weeks on List</p>
+              <p class="title is-5">{{ details.weeks_on_list }}</p>
+            </div>
+          </div>
+          <div class="level-left" v-show="readingListPage">
+            <a class="level-item" aria-label="reply">
+              <span class="icon is-large" @click="moveUp">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+              </span>
+            </a>
+            <a class="level-item" aria-label="retweet">
+              <span class="icon is-large" @click="moveDown">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+              </span>
+            </a>
+          </div>
+          <div class="level-right" v-show="readingListPage">
+            <div class="level-item has-text-centered">
+              <div>
+                <router-link
+                  tag="a"
+                  class="heading"
+                  :to="{ name: 'Details', params: { isbn: details.primary_isbn10 } }"
+                >
+                  View Details <i class="fa fa-arrow-right"></i>
+                </router-link>
+              </div>
             </div>
           </div>
         </nav>
@@ -73,6 +98,10 @@ export default {
     detailPage: {
       required: false,
       default: false
+    },
+    readingListPage: {
+      required: false,
+      default: false
     }
   },
   computed: {
@@ -81,6 +110,9 @@ export default {
     },
     tooltipLabel() {
       return this.onReadingList ? 'Remove from Reading List' : 'Add to Reading List';
+    },
+    showRankings() {
+      return !this.detailPage && !this.readingListPage;
     },
     ...mapGetters(['bookOnReadingList'])
   },
@@ -101,6 +133,20 @@ export default {
           duration: 1000
         });
       }
+    },
+    moveUp() {
+      this.$emit('move-book', {
+        direction: 'up',
+        book: this.details
+      });
+      // this.$store.dispatch('moveBookUp', this.details);
+    },
+    moveDown() {
+      this.$emit('move-book', {
+        direction: 'down',
+        book: this.details
+      });
+      // this.$store.dispatch('moveBookDown', this.details);
     }
   }
 };
