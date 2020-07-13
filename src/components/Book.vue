@@ -49,9 +49,10 @@
         </nav>
       </div>
       <div class="media-right">
-        <b-tooltip label="Add to Reading List" :animated="true" :delay="250">
-          <span class="icon">
-            <i class="far fa-bookmark" aria-hidden="true"></i>
+        <b-tooltip :label="tooltipLabel" :animated="true" :delay="250">
+          <span class="icon" @click="toggleReadingList">
+            <i v-if="onReadingList" class="fas fa-bookmark" aria-hidden="true"></i>
+            <i v-else class="far fa-bookmark" aria-hidden="true"></i>
           </span>
         </b-tooltip>
       </div>
@@ -60,6 +61,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Book',
   props: {
@@ -71,7 +74,22 @@ export default {
       required: false,
       default: false
     }
-  }
+  },
+  computed: {
+    onReadingList() {
+      return this.bookOnReadingList(this.details);
+    },
+    tooltipLabel() {
+      return this.onReadingList ? 'Remove from Reading List' : 'Add to Reading List';
+    },
+    ...mapGetters(['bookOnReadingList'])
+  },
+  methods: {
+    toggleReadingList() {
+      if (this.onReadingList) this.$store.dispatch('removeFromReadingList', this.details);
+      else this.$store.dispatch('addToReadingList', this.details);
+    }
+  },
 };
 </script>
 

@@ -14,7 +14,8 @@ export default new Vuex.Store({
       rank: true,
       rankLw: null,
       wol: null
-    }
+    },
+    readingList: {}
   },
   mutations: {
     FETCHING(state) {
@@ -72,6 +73,12 @@ export default new Vuex.Store({
       this.state.books = state.ogBooks.filter(book => {
         return book.title.includes(keywords.toUpperCase());
       });
+    },
+    ADD_TO_READING_LIST(state, book) {
+      Vue.set(state.readingList, book.primary_isbn10, book);
+    },
+    REMOVE_FROM_READING_LIST(state, book) {
+      Vue.delete(state.readingList, book.primary_isbn10);
     }
   },
   actions: {
@@ -95,6 +102,17 @@ export default new Vuex.Store({
     },
     search({ commit }, keywords) {
       commit('SEARCH', keywords);
+    },
+    removeFromReadingList({ commit }, book) {
+      commit('REMOVE_FROM_READING_LIST', book);
+    },
+    addToReadingList({ commit }, book) {
+      commit('ADD_TO_READING_LIST', book);
+    }
+  },
+  getters: {
+    bookOnReadingList: state => book => {
+      return Object.prototype.hasOwnProperty.call(state.readingList, book.primary_isbn10);
     }
   }
 });
