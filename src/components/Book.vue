@@ -86,10 +86,21 @@ export default {
   },
   methods: {
     toggleReadingList() {
-      if (this.onReadingList) this.$store.dispatch('removeFromReadingList', this.details);
-      else this.$store.dispatch('addToReadingList', this.details);
+      if (this.onReadingList) {
+        this.$store.dispatch('removeFromReadingList', this.details);
+        this.$buefy.toast.open({
+          message: 'Removed from Reading List.',
+          type: 'is-warning'
+        });
+      } else {
+        this.$store.dispatch('addToReadingList', this.details);
+        this.$buefy.toast.open({
+          message: 'Added to Reading List!',
+          type: 'is-primary'
+        });
+      }
     }
-  },
+  }
 };
 </script>
 
