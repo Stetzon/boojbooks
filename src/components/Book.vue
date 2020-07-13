@@ -90,13 +90,15 @@ export default {
         this.$store.dispatch('removeFromReadingList', this.details);
         this.$buefy.toast.open({
           message: 'Removed from Reading List.',
-          type: 'is-warning'
+          type: 'is-warning',
+          duration: 1000
         });
       } else {
         this.$store.dispatch('addToReadingList', this.details);
         this.$buefy.toast.open({
           message: 'Added to Reading List!',
-          type: 'is-primary'
+          type: 'is-primary',
+          duration: 1000
         });
       }
     }
