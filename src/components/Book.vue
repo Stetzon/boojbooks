@@ -9,28 +9,41 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <strong>{{ details.title }}</strong> <small>{{ details.author }}</small>
+            <router-link :to="{ name: 'Details', params: { isbn: details.primary_isbn10 } }">
+              <strong>{{ details.title }}</strong>
+            </router-link>
+            <small>{{ details.author }}</small>
             <br />
-            {{ details.description }}
+            <span v-show="detailPage">{{ details.description }}</span>
           </p>
         </div>
         <nav class="level is-mobile">
-          <div class="level-item has-text-centered">
+          <div v-show="!detailPage" class="level-item has-text-centered">
             <div>
               <p class="heading">This Week</p>
               <p class="title is-5">{{ details.rank }}</p>
             </div>
           </div>
-          <div class="level-item has-text-centered">
+          <div v-show="!detailPage" class="level-item has-text-centered">
             <div>
               <p class="heading">Last Week</p>
               <p class="title is-5">{{ details.rank_last_week }}</p>
             </div>
           </div>
-          <div class="level-item has-text-centered">
+          <div v-show="!detailPage" class="level-item has-text-centered">
             <div>
               <p class="heading">Weeks on List</p>
               <p class="title is-5">{{ details.weeks_on_list }}</p>
+            </div>
+          </div>
+          <div v-show="detailPage" class="level-item has-text-centered">
+            <div>
+              <p class="heading">Buy now</p>
+              <p class="title is-5">
+                <a :href="details.amazon_product_url" target="_blank"
+                  ><i class="fab fa-amazon"></i
+                ></a>
+              </p>
             </div>
           </div>
         </nav>
@@ -53,6 +66,10 @@ export default {
     details: {
       required: true,
       type: Object
+    },
+    detailPage: {
+      required: false,
+      default: false
     }
   }
 };
@@ -70,8 +87,9 @@ export default {
   transition: box-shadow 0.2s, opacity 0.2s;
 }
 .box {
-  .content strong {
+  .content a {
     color: $title-color;
+    margin-right: 0.5rem;
   }
   .icon {
     color: $link-color;

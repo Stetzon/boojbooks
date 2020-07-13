@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import API from '../lib/api';
 import Books from '../components/Books';
 import { mapState } from 'vuex';
 
@@ -61,16 +60,12 @@ export default {
   components: { Books },
   data() {
     return {
-      books: [],
       search: ''
     };
   },
-  async mounted() {
-    const { data } = await API.getBestSellersList();
-    this.books = data.results.books;
-  },
   computed: {
     ...mapState({
+      books: state => state.books,
       loading: state => state.loading,
       sortRank: state => state.sort.rank,
       sortRankLw: state => state.sort.rankLw,
@@ -89,7 +84,7 @@ export default {
     },
     sortByWol() {
       this.$store.dispatch('sortByWol', !this.sortByWol);
-    },
+    }
   },
   watch: {
     search(val) {
