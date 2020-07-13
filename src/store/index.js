@@ -113,6 +113,9 @@ export default new Vuex.Store({
   getters: {
     bookOnReadingList: state => book => {
       return Object.prototype.hasOwnProperty.call(state.readingList, book.primary_isbn10);
+    },
+    readingListAsArray: state => {
+      return Object.values(state.readingList);
     }
   }
 });
